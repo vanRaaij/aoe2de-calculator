@@ -22,9 +22,12 @@
         }
     },
     "test-dependencies": {
-        "direct": {},
+        "direct": {
+            "elm-explorations/test": "1.2.2"
+        },
         "indirect": {
-            "avh4/elm-color": "1.0.0"
+            "avh4/elm-color": "1.0.0",
+            "elm/random": "1.0.0"
         }
     }
 }
