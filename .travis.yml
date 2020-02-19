@@ -1,0 +1,15 @@
+language: elm
+elm:
+  latest-0.19.1
+elm_test:
+  0.19.1
+elm_format:
+  0.8.2
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: master
