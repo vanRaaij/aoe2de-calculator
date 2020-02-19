@@ -1,4 +1,4 @@
-module Test.Generated.Main1995145352 exposing (main)
+module Test.Generated.Main2745102226 exposing (main)
 
 import ResourcesTest
 
@@ -11,4 +11,4 @@ main : Test.Runner.Node.TestProgram
 main =
     [     Test.describe "ResourcesTest" [ResourcesTest.suite] ]
         |> Test.concat
-        |> Test.Runner.Node.run { runs = Nothing, report = (ConsoleReport UseColor), seed = 29972298491596, processes = 2, paths = ["/home/travis/build/vanRaaij/aoe2de-calculator/tests/ResourcesTest.elm"]}
+        |> Test.Runner.Node.run { runs = Nothing, report = (ConsoleReport UseColor), seed = 57380258932549, processes = 2, paths = ["/home/travis/build/vanRaaij/aoe2de-calculator/tests/ResourcesTest.elm"]}
