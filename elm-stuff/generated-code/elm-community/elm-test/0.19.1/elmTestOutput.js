@@ -7203,7 +7203,7 @@ var $author$project$ResourcesTest$suite = A2(
 						cost);
 				}))
 		]));
-var $author$project$Test$Generated$Main2745102226$main = A2(
+var $author$project$Test$Generated$Main1436363166$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -7211,7 +7211,7 @@ var $author$project$Test$Generated$Main2745102226$main = A2(
 		processes: 2,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 57380258932549
+		seed: 259662697645664
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -7222,10 +7222,10 @@ var $author$project$Test$Generated$Main2745102226$main = A2(
 				_List_fromArray(
 					[$author$project$ResourcesTest$suite]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main2745102226':{'init':$author$project$Test$Generated$Main2745102226$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main1436363166':{'init':$author$project$Test$Generated$Main1436363166$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-4984.sock";
+var pipeFilename = "/tmp/elm_test-4991.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";
