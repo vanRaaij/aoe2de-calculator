@@ -1,3 +1,5 @@
+sudo: false
+
 language: elm
 elm:
   latest-0.19.1
@@ -6,7 +8,11 @@ elm_test:
 elm_format:
   0.8.2
 
-script: bash build.sh
+script:
+  - bash build.sh
+
+install:
+  - npm install -g uglify-js
 
 deploy:
   provider: pages
