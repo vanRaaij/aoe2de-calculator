@@ -6,6 +6,9 @@ elm_test:
 elm_format:
   0.8.2
 
+script:
+  - bash build.sh
+
 deploy:
   provider: pages
   skip_cleanup: true
