@@ -9,9 +9,6 @@ elm_format:
 script:
   - bash build.sh
 
-install:
-  - sudo npm install -g uglify-js
-
 deploy:
   provider: pages
   skip_cleanup: true
