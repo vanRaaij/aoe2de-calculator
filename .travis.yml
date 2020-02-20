@@ -10,7 +10,7 @@ script:
   - bash build.sh
 
 install:
-  - npm install -g uglify-js
+  - sudo npm install -g uglify-js
 
 deploy:
   provider: pages
