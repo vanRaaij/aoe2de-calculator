@@ -2,7 +2,7 @@
 
 set -e
 
-js="build/elm.html"
+js="build/index.js"
 
 elm make src/Main.elm --optimize --output=$js $@
 
