@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.bv.aJ === region.bS.aJ)
+	if (region.bu.aJ === region.bR.aJ)
 	{
-		return 'on line ' + region.bv.aJ;
+		return 'on line ' + region.bu.aJ;
 	}
-	return 'on lines ' + region.bv.aJ + ' through ' + region.bS.aJ;
+	return 'on lines ' + region.bu.aJ + ' through ' + region.bR.aJ;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.c1,
-		impl.ds,
-		impl.dn,
+		impl.c0,
+		impl.dr,
+		impl.dm,
 		function() { return function() {} }
 	);
 });
@@ -2660,8 +2660,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		N: func(record.N),
-		bw: record.bw,
-		bs: record.bs
+		bv: record.bv,
+		br: record.br
 	}
 });
 
@@ -2930,10 +2930,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.N;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bw;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bv;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.bs) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.br) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,11 +3883,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.c1,
-		impl.ds,
-		impl.dn,
+		impl.c0,
+		impl.dr,
+		impl.dm,
 		function(sendToApp, initialModel) {
-			var view = impl.du;
+			var view = impl.dt;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3919,12 +3919,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.c1,
-		impl.ds,
-		impl.dn,
+		impl.c0,
+		impl.dr,
+		impl.dm,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.bu && impl.bu(sendToApp)
-			var view = impl.du;
+			var divertHrefToApp = impl.bt && impl.bt(sendToApp)
+			var view = impl.dt;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3932,12 +3932,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.cI);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.cH);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.dq) && (_VirtualDom_doc.title = title = doc.dq);
+				(title !== doc.dp) && (_VirtualDom_doc.title = title = doc.dp);
 			});
 		}
 	);
@@ -3993,12 +3993,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.dd;
-	var onUrlRequest = impl.de;
+	var onUrlChange = impl.dc;
+	var onUrlRequest = impl.dd;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		bu: function(sendToApp)
+		bt: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.cg === next.cg
-							&& curr.bZ === next.bZ
-							&& curr.cd.a === next.cd.a
+							&& curr.cf === next.cf
+							&& curr.bY === next.bY
+							&& curr.cc.a === next.cc.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4024,13 +4024,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		c1: function(flags)
+		c0: function(flags)
 		{
-			return A3(impl.c1, flags, _Browser_getUrl(), key);
+			return A3(impl.c0, flags, _Browser_getUrl(), key);
 		},
-		du: impl.du,
-		ds: impl.ds,
-		dn: impl.dn
+		dt: impl.dt,
+		dr: impl.dr,
+		dm: impl.dm
 	});
 }
 
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { c_: 'hidden', cL: 'visibilitychange' }
+		? { cZ: 'hidden', cK: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { c_: 'mozHidden', cL: 'mozvisibilitychange' }
+		? { cZ: 'mozHidden', cK: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { c_: 'msHidden', cL: 'msvisibilitychange' }
+		? { cZ: 'msHidden', cK: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { c_: 'webkitHidden', cL: 'webkitvisibilitychange' }
-		: { c_: 'hidden', cL: 'visibilitychange' };
+		? { cZ: 'webkitHidden', cK: 'webkitvisibilitychange' }
+		: { cZ: 'hidden', cK: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		co: _Browser_getScene(),
-		cz: {
-			cB: _Browser_window.pageXOffset,
-			cC: _Browser_window.pageYOffset,
-			cA: _Browser_doc.documentElement.clientWidth,
-			bY: _Browser_doc.documentElement.clientHeight
+		cn: _Browser_getScene(),
+		cy: {
+			cA: _Browser_window.pageXOffset,
+			cB: _Browser_window.pageYOffset,
+			cz: _Browser_doc.documentElement.clientWidth,
+			bX: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		cA: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		bY: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		cz: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		bX: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			co: {
-				cA: node.scrollWidth,
-				bY: node.scrollHeight
+			cn: {
+				cz: node.scrollWidth,
+				bX: node.scrollHeight
 			},
-			cz: {
-				cB: node.scrollLeft,
-				cC: node.scrollTop,
-				cA: node.clientWidth,
-				bY: node.clientHeight
+			cy: {
+				cA: node.scrollLeft,
+				cB: node.scrollTop,
+				cz: node.clientWidth,
+				bX: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			co: _Browser_getScene(),
-			cz: {
-				cB: x,
-				cC: y,
-				cA: _Browser_doc.documentElement.clientWidth,
-				bY: _Browser_doc.documentElement.clientHeight
+			cn: _Browser_getScene(),
+			cy: {
+				cA: x,
+				cB: y,
+				cz: _Browser_doc.documentElement.clientWidth,
+				bX: _Browser_doc.documentElement.clientHeight
 			},
-			cT: {
-				cB: x + rect.left,
-				cC: y + rect.top,
-				cA: rect.width,
-				bY: rect.height
+			cS: {
+				cA: x + rect.left,
+				cB: y + rect.top,
+				cz: rect.width,
+				bX: rect.height
 			}
 		};
 	});
@@ -4856,7 +4856,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {bV: fragment, bZ: host, cb: path, cd: port_, cg: protocol, ch: query};
+		return {bU: fragment, bY: host, ca: path, cc: port_, cf: protocol, cg: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5135,91 +5135,70 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Data$BuildingData$Barracks = 0;
+var $author$project$PageElements$Civilization$init = {aO: $elm$core$Maybe$Nothing};
 var $author$project$Data$UnitData$Militia = 0;
-var $author$project$Data$TechnologyData$UnitTech = function (a) {
-	return {$: 1, a: a};
-};
-var $author$project$Data$TechnologyData$UnitTechnology = F4(
-	function (name, building, selector, effect) {
-		return {cK: building, cS: effect, Y: name, dm: selector};
+var $author$project$Data$UnitData$Spearman = 1;
+var $author$project$PageElements$Unit$basicUnits = _List_fromArray(
+	[0, 1]);
+var $elm$core$Array$fromListHelp = F3(
+	function (list, nodeList, nodeListSize) {
+		fromListHelp:
+		while (true) {
+			var _v0 = A2($elm$core$Elm$JsArray$initializeFromList, $elm$core$Array$branchFactor, list);
+			var jsArray = _v0.a;
+			var remainingItems = _v0.b;
+			if (_Utils_cmp(
+				$elm$core$Elm$JsArray$length(jsArray),
+				$elm$core$Array$branchFactor) < 0) {
+				return A2(
+					$elm$core$Array$builderToArray,
+					true,
+					{k: nodeList, h: nodeListSize, j: jsArray});
+			} else {
+				var $temp$list = remainingItems,
+					$temp$nodeList = A2(
+					$elm$core$List$cons,
+					$elm$core$Array$Leaf(jsArray),
+					nodeList),
+					$temp$nodeListSize = nodeListSize + 1;
+				list = $temp$list;
+				nodeList = $temp$nodeList;
+				nodeListSize = $temp$nodeListSize;
+				continue fromListHelp;
+			}
+		}
 	});
-var $author$project$Resources$Cost = F2(
-	function (resources, buildTime) {
-		return {s: buildTime, y: resources};
-	});
-var $author$project$Resources$applyToFood = F2(
-	function (f, _v0) {
-		var resources = _v0.y;
-		var buildTime = _v0.s;
-		var newResources = _Utils_update(
-			resources,
-			{
-				aG: f(resources.aG)
-			});
-		return A2($author$project$Resources$Cost, newResources, buildTime);
-	});
-var $author$project$Data$TechnologyData$supplies = $author$project$Data$TechnologyData$UnitTech(
-	A4(
-		$author$project$Data$TechnologyData$UnitTechnology,
-		'Supplies',
-		0,
-		function (uf) {
-			return !uf.dr;
-		},
-		$author$project$Resources$applyToFood(
-			$elm$core$Basics$sub(15))));
-var $author$project$Data$CivilizationData$britons = {
-	S: {as: 5, aw: 3},
-	T: 'Centuries of overseas invasions galvanized a hardy and industrious population into a powerful juggernaut. Forge fractured kingdoms into one, defend your island from overseas incursions with disciplined yeomen levies, and set your sights far beyond your borders. Your experienced archers and Longbowmen will shower the battlefield with arrows while your siege engineers construct trebuchets capable of demolishing even the most formidable castles!',
-	Y: 'Britons',
-	ab: _List_fromArray(
-		[$author$project$Data$TechnologyData$supplies])
+var $elm$core$Array$fromList = function (list) {
+	if (!list.b) {
+		return $elm$core$Array$empty;
+	} else {
+		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
+	}
 };
-var $author$project$Data$CivilizationData$byzantines = {
-	S: {as: 5, aw: 3},
-	T: 'While the Western Roman Empire decayed and collapsed, its eastern half in Byzantium remained an imperial titan for centuries to come. Repulse countless invasions with imposing fortifications, command vast and versatile armies amassed from within and outside your borders, and immolate enemy fleets with siphons of Greek Fire. Your heavily-armored Cataphracts inspire fear from the Danube to the Euphrates while your scholars propel you into a new age of technology and learning!',
-	Y: 'Byzantines',
-	ab: _List_fromArray(
-		[$author$project$Data$TechnologyData$supplies])
+var $author$project$PageElements$Unit$init = function () {
+	var initHelper = function (family) {
+		return {bN: 0, bj: 0, co: 0, bz: family};
+	};
+	return $elm$core$Array$fromList(
+		A2($elm$core$List$map, initHelper, $author$project$PageElements$Unit$basicUnits));
+}();
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Main$init = function (_v0) {
+	return _Utils_Tuple2(
+		{aE: $author$project$PageElements$Civilization$init, bc: $author$project$PageElements$Unit$init},
+		$elm$core$Platform$Cmd$none);
 };
-var $author$project$Data$CivilizationData$chinese = {
-	S: {as: 5, aw: 3},
-	T: 'Receive the Mandate of Heaven, nourish a large population with the bounty of the fertile river valleys of China, and command your people to build an empire stretching to the four corners of the earth! Guide your scholars and craftsmen towards outstanding technological discoveries and apply them to your vast armies. Will your fearsome Chu Ko Nu, armed with rapid-firing mechanical crossbows, be enough to lead your armies to victory against the wily enemies beyond your borders?',
-	Y: 'Chinese',
-	ab: _List_fromArray(
-		[$author$project$Data$TechnologyData$supplies])
+var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $author$project$Main$subscriptions = function (model) {
+	return $elm$core$Platform$Sub$batch(_List_Nil);
 };
-var $author$project$Data$CivilizationData$franks = {
-	S: {as: 5, aw: 3},
-	T: 'Rule the hardy folk of the Francisca axe and establish a dynasty worthy to follow in the footsteps of the Romans! Seize the English crown, lead chivalrous knights and fierce infantry to victories as far away as the Holy Land, and construct imposing castles to defend your productive farmers from enemy incursions. The Frankish unique unit is the Throwing Axeman, a ruthless warrior whose axes spell death to anything that dares to step within range.',
-	Y: 'Franks',
-	ab: _List_fromArray(
-		[$author$project$Data$TechnologyData$supplies])
-};
-var $author$project$Data$CivilizationData$persians = {
-	S: {as: 3, aw: 3},
-	T: 'Emerging from inner Persia, the House of Sasan toppled feeble Parthia, establishing a dynasty capable of challenging their Roman neighbors to the west. Even after the Muslim conquest, the Sasanian legacy lived on in the structure of the medieval Persian states. Stun your enemies with a stampede of mahouted War Elephants and hails of arrows thick enough to blot out the sun while your Savaran ride them down, or field an army of gunpowder units worthy of the great Safavid Empire. Nothing is beyond your grasp!',
-	Y: 'Persians',
-	ab: _List_fromArray(
-		[$author$project$Data$TechnologyData$supplies])
-};
-var $author$project$Data$CivilizationData$saracens = {
-	S: {as: 5, aw: 2},
-	T: 'In the 7th century, the nomadic desert tribes of Arabia rallied around a charismatic prophet and established one of the most far-reaching and vibrant religious cultures that the world has ever seen. Lead swift cavalry and tough camelry to conquer from Iberia to India, construct strong navies to prowl the seas, and foster rich scholarship and religious contemplation. Your well-trained Mamelukes, fearsome and fearless warriors, are the only warriors strong enough to halt the advance of the dreaded Mongol hordes!',
-	Y: 'Saracens',
-	ab: _List_fromArray(
-		[$author$project$Data$TechnologyData$supplies])
-};
-var $author$project$Data$CivilizationData$all = _List_fromArray(
-	[$author$project$Data$CivilizationData$britons, $author$project$Data$CivilizationData$byzantines, $author$project$Data$CivilizationData$chinese, $author$project$Data$CivilizationData$franks, $author$project$Data$CivilizationData$persians, $author$project$Data$CivilizationData$saracens]);
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $elm$core$Dict$Black = 1;
 var $elm$core$Dict$RBNode_elm_builtin = F5(
 	function (a, b, c, d, e) {
 		return {$: -1, a: a, b: b, c: c, d: d, e: e};
 	});
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$Red = 0;
 var $elm$core$Dict$balance = F5(
 	function (color, key, value, left, right) {
@@ -5324,87 +5303,6 @@ var $elm$core$Dict$insert = F3(
 			return x;
 		}
 	});
-var $elm$core$Dict$fromList = function (assocs) {
-	return A3(
-		$elm$core$List$foldl,
-		F2(
-			function (_v0, dict) {
-				var key = _v0.a;
-				var value = _v0.b;
-				return A3($elm$core$Dict$insert, key, value, dict);
-			}),
-		$elm$core$Dict$empty,
-		assocs);
-};
-var $author$project$PageElements$Civilization$toCivDict = function (list) {
-	return $elm$core$Dict$fromList(
-		A2(
-			$elm$core$List$map,
-			function (c) {
-				return _Utils_Tuple2(c.Y, c);
-			},
-			list));
-};
-var $author$project$PageElements$Civilization$init = {
-	aZ: $author$project$PageElements$Civilization$toCivDict($author$project$Data$CivilizationData$all),
-	aO: $elm$core$Maybe$Nothing
-};
-var $author$project$Data$UnitData$Spearman = 1;
-var $author$project$PageElements$Unit$basicUnits = _List_fromArray(
-	[0, 1]);
-var $elm$core$Array$fromListHelp = F3(
-	function (list, nodeList, nodeListSize) {
-		fromListHelp:
-		while (true) {
-			var _v0 = A2($elm$core$Elm$JsArray$initializeFromList, $elm$core$Array$branchFactor, list);
-			var jsArray = _v0.a;
-			var remainingItems = _v0.b;
-			if (_Utils_cmp(
-				$elm$core$Elm$JsArray$length(jsArray),
-				$elm$core$Array$branchFactor) < 0) {
-				return A2(
-					$elm$core$Array$builderToArray,
-					true,
-					{k: nodeList, h: nodeListSize, j: jsArray});
-			} else {
-				var $temp$list = remainingItems,
-					$temp$nodeList = A2(
-					$elm$core$List$cons,
-					$elm$core$Array$Leaf(jsArray),
-					nodeList),
-					$temp$nodeListSize = nodeListSize + 1;
-				list = $temp$list;
-				nodeList = $temp$nodeList;
-				nodeListSize = $temp$nodeListSize;
-				continue fromListHelp;
-			}
-		}
-	});
-var $elm$core$Array$fromList = function (list) {
-	if (!list.b) {
-		return $elm$core$Array$empty;
-	} else {
-		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
-	}
-};
-var $author$project$PageElements$Unit$init = function () {
-	var initHelper = function (family) {
-		return {bO: 0, bk: 0, cp: 0, bA: family};
-	};
-	return $elm$core$Array$fromList(
-		A2($elm$core$List$map, initHelper, $author$project$PageElements$Unit$basicUnits));
-}();
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$init = function (_v0) {
-	return _Utils_Tuple2(
-		{aE: $author$project$PageElements$Civilization$init, bd: $author$project$PageElements$Unit$init},
-		$elm$core$Platform$Cmd$none);
-};
-var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $author$project$Main$subscriptions = function (model) {
-	return $elm$core$Platform$Sub$batch(_List_Nil);
-};
 var $elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {
 		return true;
@@ -5650,6 +5548,7 @@ var $rtfeldman$elm_css$VirtualDom$Styled$accumulateStyledHtml = F2(
 					finalStyles);
 		}
 	});
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $elm$core$Dict$singleton = F2(
 	function (key, value) {
 		return A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
@@ -5775,8 +5674,8 @@ var $rtfeldman$elm_css$Css$Structure$compactHelp = F2(
 					A2($elm$core$List$cons, declaration, declarations));
 			case 6:
 				var record = declaration.a;
-				return $elm$core$String$isEmpty(record.cO) ? _Utils_Tuple2(keyframesByName, declarations) : _Utils_Tuple2(
-					A3($elm$core$Dict$insert, record.Y, record.cO, keyframesByName),
+				return $elm$core$String$isEmpty(record.cN) ? _Utils_Tuple2(keyframesByName, declarations) : _Utils_Tuple2(
+					A3($elm$core$Dict$insert, record.Y, record.cN, keyframesByName),
 					declarations);
 			case 7:
 				var properties = declaration.a;
@@ -5822,16 +5721,16 @@ var $rtfeldman$elm_css$Css$Structure$withKeyframeDeclarations = F2(
 					var name = _v0.a;
 					var decl = _v0.b;
 					return $rtfeldman$elm_css$Css$Structure$Keyframes(
-						{cO: decl, Y: name});
+						{cN: decl, Y: name});
 				},
 				$elm$core$Dict$toList(keyframesByName)),
 			compactedDeclarations);
 	});
 var $rtfeldman$elm_css$Css$Structure$compactStylesheet = function (_v0) {
-	var charset = _v0.bN;
-	var imports = _v0.b$;
-	var namespaces = _v0.b8;
-	var declarations = _v0.cP;
+	var charset = _v0.bM;
+	var imports = _v0.b_;
+	var namespaces = _v0.b7;
+	var declarations = _v0.cO;
 	var _v1 = A3(
 		$elm$core$List$foldr,
 		$rtfeldman$elm_css$Css$Structure$compactHelp,
@@ -5840,7 +5739,7 @@ var $rtfeldman$elm_css$Css$Structure$compactStylesheet = function (_v0) {
 	var keyframesByName = _v1.a;
 	var compactedDeclarations = _v1.b;
 	var finalDeclarations = A2($rtfeldman$elm_css$Css$Structure$withKeyframeDeclarations, keyframesByName, compactedDeclarations);
-	return {bN: charset, cP: finalDeclarations, b$: imports, b8: namespaces};
+	return {bM: charset, cO: finalDeclarations, b_: imports, b7: namespaces};
 };
 var $elm$core$Maybe$map = F2(
 	function (f, maybe) {
@@ -5884,7 +5783,7 @@ var $elm$core$List$filter = F2(
 			list);
 	});
 var $rtfeldman$elm_css$Css$Structure$Output$mediaExpressionToString = function (expression) {
-	return '(' + (expression.bU + (A2(
+	return '(' + (expression.bT + (A2(
 		$elm$core$Maybe$withDefault,
 		'',
 		A2(
@@ -6133,7 +6032,7 @@ var $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration = function (d
 			return 'TODO';
 		case 6:
 			var name = decl.a.Y;
-			var declaration = decl.a.cO;
+			var declaration = decl.a.cN;
 			return '@keyframes ' + (name + (' {\n' + (declaration + '\n}')));
 		case 7:
 			return 'TODO';
@@ -6144,10 +6043,10 @@ var $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration = function (d
 	}
 };
 var $rtfeldman$elm_css$Css$Structure$Output$prettyPrint = function (_v0) {
-	var charset = _v0.bN;
-	var imports = _v0.b$;
-	var namespaces = _v0.b8;
-	var declarations = _v0.cP;
+	var charset = _v0.bM;
+	var imports = _v0.b_;
+	var namespaces = _v0.b7;
+	var declarations = _v0.cO;
 	return A2(
 		$elm$core$String$join,
 		'\n\n',
@@ -7241,7 +7140,7 @@ var $rtfeldman$elm_css$Css$Preprocess$Resolve$applyStyles = F2(
 						_List_fromArray(
 							[
 								$rtfeldman$elm_css$Css$Structure$Keyframes(
-								{cO: str, Y: name})
+								{cN: str, Y: name})
 							]));
 				case 4:
 					var _v12 = styles.a;
@@ -7376,13 +7275,13 @@ var $rtfeldman$elm_css$Css$Preprocess$Resolve$toDeclarations = function (snippet
 	}
 };
 var $rtfeldman$elm_css$Css$Preprocess$Resolve$toStructure = function (_v0) {
-	var charset = _v0.bN;
-	var imports = _v0.b$;
-	var namespaces = _v0.b8;
-	var snippets = _v0.cr;
+	var charset = _v0.bM;
+	var imports = _v0.b_;
+	var namespaces = _v0.b7;
+	var snippets = _v0.cq;
 	var declarations = $rtfeldman$elm_css$Css$Preprocess$Resolve$extract(
 		A2($elm$core$List$concatMap, $rtfeldman$elm_css$Css$Preprocess$unwrapSnippet, snippets));
-	return {bN: charset, cP: declarations, b$: imports, b8: namespaces};
+	return {bM: charset, cO: declarations, b_: imports, b7: namespaces};
 };
 var $rtfeldman$elm_css$Css$Preprocess$Resolve$compileHelp = function (sheet) {
 	return $rtfeldman$elm_css$Css$Structure$Output$prettyPrint(
@@ -7428,7 +7327,7 @@ var $rtfeldman$elm_css$VirtualDom$Styled$snippetFromPair = function (_v0) {
 				])));
 };
 var $rtfeldman$elm_css$Css$Preprocess$stylesheet = function (snippets) {
-	return {bN: $elm$core$Maybe$Nothing, b$: _List_Nil, b8: _List_Nil, cr: snippets};
+	return {bM: $elm$core$Maybe$Nothing, b_: _List_Nil, b7: _List_Nil, cq: snippets};
 };
 var $rtfeldman$elm_css$VirtualDom$Styled$toDeclaration = function (dict) {
 	return $rtfeldman$elm_css$Css$Preprocess$Resolve$compile(
@@ -7618,6 +7517,105 @@ var $rtfeldman$elm_css$Html$Styled$toUnstyled = $rtfeldman$elm_css$VirtualDom$St
 var $author$project$Main$UpdateCiv = $elm$core$Basics$identity;
 var $elm$core$Platform$Cmd$map = _Platform_map;
 var $author$project$PageElements$Unit$baseUnitUpdateData = {as: 0, aw: 0};
+var $author$project$Data$BuildingData$Barracks = 0;
+var $author$project$Data$TechnologyData$UnitTech = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Data$TechnologyData$UnitTechnology = F4(
+	function (name, building, selector, effect) {
+		return {cJ: building, cR: effect, Y: name, dl: selector};
+	});
+var $author$project$Resources$Cost = F2(
+	function (resources, buildTime) {
+		return {s: buildTime, y: resources};
+	});
+var $author$project$Resources$applyToFood = F2(
+	function (f, _v0) {
+		var resources = _v0.y;
+		var buildTime = _v0.s;
+		var newResources = _Utils_update(
+			resources,
+			{
+				aG: f(resources.aG)
+			});
+		return A2($author$project$Resources$Cost, newResources, buildTime);
+	});
+var $author$project$Data$TechnologyData$supplies = $author$project$Data$TechnologyData$UnitTech(
+	A4(
+		$author$project$Data$TechnologyData$UnitTechnology,
+		'Supplies',
+		0,
+		function (uf) {
+			return !uf.dq;
+		},
+		$author$project$Resources$applyToFood(
+			$elm$core$Basics$sub(15))));
+var $author$project$Data$CivilizationData$britons = {
+	S: {as: 5, aw: 3},
+	T: 'Centuries of overseas invasions galvanized a hardy and industrious population into a powerful juggernaut. Forge fractured kingdoms into one, defend your island from overseas incursions with disciplined yeomen levies, and set your sights far beyond your borders. Your experienced archers and Longbowmen will shower the battlefield with arrows while your siege engineers construct trebuchets capable of demolishing even the most formidable castles!',
+	Y: 'Britons',
+	ab: _List_fromArray(
+		[$author$project$Data$TechnologyData$supplies])
+};
+var $author$project$Data$CivilizationData$byzantines = {
+	S: {as: 5, aw: 3},
+	T: 'While the Western Roman Empire decayed and collapsed, its eastern half in Byzantium remained an imperial titan for centuries to come. Repulse countless invasions with imposing fortifications, command vast and versatile armies amassed from within and outside your borders, and immolate enemy fleets with siphons of Greek Fire. Your heavily-armored Cataphracts inspire fear from the Danube to the Euphrates while your scholars propel you into a new age of technology and learning!',
+	Y: 'Byzantines',
+	ab: _List_fromArray(
+		[$author$project$Data$TechnologyData$supplies])
+};
+var $author$project$Data$CivilizationData$chinese = {
+	S: {as: 5, aw: 3},
+	T: 'Receive the Mandate of Heaven, nourish a large population with the bounty of the fertile river valleys of China, and command your people to build an empire stretching to the four corners of the earth! Guide your scholars and craftsmen towards outstanding technological discoveries and apply them to your vast armies. Will your fearsome Chu Ko Nu, armed with rapid-firing mechanical crossbows, be enough to lead your armies to victory against the wily enemies beyond your borders?',
+	Y: 'Chinese',
+	ab: _List_fromArray(
+		[$author$project$Data$TechnologyData$supplies])
+};
+var $author$project$Data$CivilizationData$franks = {
+	S: {as: 5, aw: 3},
+	T: 'Rule the hardy folk of the Francisca axe and establish a dynasty worthy to follow in the footsteps of the Romans! Seize the English crown, lead chivalrous knights and fierce infantry to victories as far away as the Holy Land, and construct imposing castles to defend your productive farmers from enemy incursions. The Frankish unique unit is the Throwing Axeman, a ruthless warrior whose axes spell death to anything that dares to step within range.',
+	Y: 'Franks',
+	ab: _List_fromArray(
+		[$author$project$Data$TechnologyData$supplies])
+};
+var $author$project$Data$CivilizationData$persians = {
+	S: {as: 3, aw: 3},
+	T: 'Emerging from inner Persia, the House of Sasan toppled feeble Parthia, establishing a dynasty capable of challenging their Roman neighbors to the west. Even after the Muslim conquest, the Sasanian legacy lived on in the structure of the medieval Persian states. Stun your enemies with a stampede of mahouted War Elephants and hails of arrows thick enough to blot out the sun while your Savaran ride them down, or field an army of gunpowder units worthy of the great Safavid Empire. Nothing is beyond your grasp!',
+	Y: 'Persians',
+	ab: _List_fromArray(
+		[$author$project$Data$TechnologyData$supplies])
+};
+var $author$project$Data$CivilizationData$saracens = {
+	S: {as: 5, aw: 2},
+	T: 'In the 7th century, the nomadic desert tribes of Arabia rallied around a charismatic prophet and established one of the most far-reaching and vibrant religious cultures that the world has ever seen. Lead swift cavalry and tough camelry to conquer from Iberia to India, construct strong navies to prowl the seas, and foster rich scholarship and religious contemplation. Your well-trained Mamelukes, fearsome and fearless warriors, are the only warriors strong enough to halt the advance of the dreaded Mongol hordes!',
+	Y: 'Saracens',
+	ab: _List_fromArray(
+		[$author$project$Data$TechnologyData$supplies])
+};
+var $author$project$Data$CivilizationData$all = _List_fromArray(
+	[$author$project$Data$CivilizationData$britons, $author$project$Data$CivilizationData$byzantines, $author$project$Data$CivilizationData$chinese, $author$project$Data$CivilizationData$franks, $author$project$Data$CivilizationData$persians, $author$project$Data$CivilizationData$saracens]);
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
+var $author$project$PageElements$Civilization$toCivDict = function (list) {
+	return $elm$core$Dict$fromList(
+		A2(
+			$elm$core$List$map,
+			function (c) {
+				return _Utils_Tuple2(c.Y, c);
+			},
+			list));
+};
+var $author$project$PageElements$Civilization$civs = $author$project$PageElements$Civilization$toCivDict($author$project$Data$CivilizationData$all);
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -7652,7 +7650,7 @@ var $elm$core$Dict$get = F2(
 var $author$project$PageElements$Civilization$update = F2(
 	function (msg, civState) {
 		var selectedCiv = msg;
-		var civ = A2($elm$core$Dict$get, selectedCiv, civState.aZ);
+		var civ = A2($elm$core$Dict$get, selectedCiv, $author$project$PageElements$Civilization$civs);
 		var newSelectedCiv = function () {
 			if ($elm$core$String$isEmpty(selectedCiv)) {
 				return $elm$core$Maybe$Nothing;
@@ -7720,7 +7718,7 @@ var $author$project$PageElements$Unit$update = F2(
 			return _Utils_update(
 				unitState,
 				{
-					bk: A2($author$project$PageElements$Unit$getBaseUnitMax, baseUnits, unitState.bA)
+					bj: A2($author$project$PageElements$Unit$getBaseUnitMax, baseUnits, unitState.bz)
 				});
 		};
 		return A2($elm$core$Array$map, apply, unitStates);
@@ -7732,11 +7730,11 @@ var $author$project$Main$update = F2(
 		var civState = _v1.a;
 		var unitUpdateData = _v1.b;
 		var cmdMsg = _v1.c;
-		var unitStates = A2($author$project$PageElements$Unit$update, model.bd, unitUpdateData);
+		var unitStates = A2($author$project$PageElements$Unit$update, model.bc, unitUpdateData);
 		return _Utils_Tuple2(
 			_Utils_update(
 				model,
-				{aE: civState, bd: unitStates}),
+				{aE: civState, bc: unitStates}),
 			A2($elm$core$Platform$Cmd$map, $elm$core$Basics$identity, cmdMsg));
 	});
 var $rtfeldman$elm_css$VirtualDom$Styled$Node = F3(
@@ -8055,7 +8053,7 @@ var $rtfeldman$elm_css$Css$prop1 = F2(
 	});
 var $rtfeldman$elm_css$Css$display = $rtfeldman$elm_css$Css$prop1('display');
 var $rtfeldman$elm_css$Css$Structure$Compatible = 0;
-var $rtfeldman$elm_css$Css$fixed = {aD: 0, aN: 0, bb: 0, G: 'fixed'};
+var $rtfeldman$elm_css$Css$fixed = {aD: 0, aN: 0, ba: 0, G: 'fixed'};
 var $rtfeldman$elm_css$Css$fontSize = $rtfeldman$elm_css$Css$prop1('font-size');
 var $rtfeldman$elm_css$Html$Styled$h1 = $rtfeldman$elm_css$Html$Styled$node('h1');
 var $rtfeldman$elm_css$Css$hidden = {r: 0, at: 0, G: 'hidden', aV: 0};
@@ -8068,8 +8066,8 @@ var $elm$core$String$fromFloat = _String_fromNumber;
 var $rtfeldman$elm_css$Css$Internal$lengthConverter = F3(
 	function (units, unitLabel, numericValue) {
 		return {
-			bB: 0,
-			bL: 0,
+			bA: 0,
+			bK: 0,
 			al: 0,
 			o: 0,
 			aI: 0,
@@ -8094,19 +8092,90 @@ var $rtfeldman$elm_css$Css$position = $rtfeldman$elm_css$Css$prop1('position');
 var $rtfeldman$elm_css$Css$PxUnits = 0;
 var $rtfeldman$elm_css$Css$px = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'px');
 var $rtfeldman$elm_css$Css$small = {o: 0, G: 'small'};
+var $rtfeldman$elm_css$Css$Preprocess$ApplyStyles = function (a) {
+	return {$: 6, a: a};
+};
+var $rtfeldman$elm_css$Css$Internal$property = F2(
+	function (key, value) {
+		return $rtfeldman$elm_css$Css$Preprocess$AppendProperty(key + (':' + value));
+	});
+var $rtfeldman$elm_css$Css$Internal$getOverloadedProperty = F3(
+	function (functionName, desiredKey, style) {
+		getOverloadedProperty:
+		while (true) {
+			switch (style.$) {
+				case 0:
+					var str = style.a;
+					var key = A2(
+						$elm$core$Maybe$withDefault,
+						'',
+						$elm$core$List$head(
+							A2($elm$core$String$split, ':', str)));
+					return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, key);
+				case 1:
+					var selector = style.a;
+					return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, 'elm-css-error-cannot-apply-' + (functionName + '-with-inapplicable-Style-for-selector'));
+				case 2:
+					var combinator = style.a;
+					return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, 'elm-css-error-cannot-apply-' + (functionName + '-with-inapplicable-Style-for-combinator'));
+				case 3:
+					var pseudoElement = style.a;
+					return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, 'elm-css-error-cannot-apply-' + (functionName + '-with-inapplicable-Style-for-pseudo-element setter'));
+				case 4:
+					return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, 'elm-css-error-cannot-apply-' + (functionName + '-with-inapplicable-Style-for-media-query'));
+				case 5:
+					return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, 'elm-css-error-cannot-apply-' + (functionName + '-with-inapplicable-Style-for-keyframes'));
+				default:
+					if (!style.a.b) {
+						return A2($rtfeldman$elm_css$Css$Internal$property, desiredKey, 'elm-css-error-cannot-apply-' + (functionName + '-with-empty-Style'));
+					} else {
+						if (!style.a.b.b) {
+							var _v1 = style.a;
+							var only = _v1.a;
+							var $temp$functionName = functionName,
+								$temp$desiredKey = desiredKey,
+								$temp$style = only;
+							functionName = $temp$functionName;
+							desiredKey = $temp$desiredKey;
+							style = $temp$style;
+							continue getOverloadedProperty;
+						} else {
+							var _v2 = style.a;
+							var first = _v2.a;
+							var rest = _v2.b;
+							var $temp$functionName = functionName,
+								$temp$desiredKey = desiredKey,
+								$temp$style = $rtfeldman$elm_css$Css$Preprocess$ApplyStyles(rest);
+							functionName = $temp$functionName;
+							desiredKey = $temp$desiredKey;
+							style = $temp$style;
+							continue getOverloadedProperty;
+						}
+					}
+			}
+		}
+	});
+var $rtfeldman$elm_css$Css$Internal$IncompatibleUnits = 0;
+var $rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty = A3($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, '', 0);
+var $rtfeldman$elm_css$Css$textAlign = function (fn) {
+	return A3(
+		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
+		'textAlign',
+		'text-align',
+		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
+};
 var $rtfeldman$elm_css$Css$top = $rtfeldman$elm_css$Css$prop1('top');
 var $rtfeldman$elm_css$Css$width = $rtfeldman$elm_css$Css$prop1('width');
 var $rtfeldman$elm_css$Css$UnitlessInteger = 0;
-var $rtfeldman$elm_css$Css$zero = {aI: 0, ap: 0, M: 0, aq: 0, ar: 0, W: 0, X: 0, aK: 0, O: 0, a5: 0, aA: '', aU: 0, G: '0'};
+var $rtfeldman$elm_css$Css$zero = {aI: 0, ap: 0, M: 0, aq: 0, ar: 0, W: 0, X: 0, aK: 0, O: 0, a4: 0, aA: '', aU: 0, G: '0'};
 var $author$project$PageElements$Civilization$show = function (_v0) {
 	var selectedCiv = _v0.aO;
-	var civs = _v0.aZ;
 	var s = function () {
 		if (selectedCiv.$ === 1) {
 			return '';
 		} else {
 			var a = selectedCiv.a;
-			var _v2 = A2($elm$core$Dict$get, a, civs);
+			var _v2 = A2($elm$core$Dict$get, a, $author$project$PageElements$Civilization$civs);
 			if (!_v2.$) {
 				var v = _v2.a;
 				return v.T;
@@ -8130,7 +8199,8 @@ var $author$project$PageElements$Civilization$show = function (_v0) {
 						$rtfeldman$elm_css$Css$px(10)),
 						$rtfeldman$elm_css$Css$top($rtfeldman$elm_css$Css$zero),
 						$rtfeldman$elm_css$Css$left($rtfeldman$elm_css$Css$zero),
-						$rtfeldman$elm_css$Css$overflowX($rtfeldman$elm_css$Css$hidden)
+						$rtfeldman$elm_css$Css$overflowX($rtfeldman$elm_css$Css$hidden),
+						$rtfeldman$elm_css$Css$textAlign($rtfeldman$elm_css$Css$left)
 					]))
 			]),
 		_List_fromArray(
@@ -8145,7 +8215,7 @@ var $author$project$PageElements$Civilization$show = function (_v0) {
 				A2(
 				$author$project$PageElements$Civilization$civSelector,
 				'Please select a civilisation',
-				$elm$core$Dict$keys(civs)),
+				$elm$core$Dict$keys($author$project$PageElements$Civilization$civs)),
 				A2(
 				$rtfeldman$elm_css$Html$Styled$div,
 				_List_fromArray(
@@ -8176,10 +8246,10 @@ var $author$project$Main$view = function (model) {
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
 	{
-		c1: $author$project$Main$init,
-		dn: $author$project$Main$subscriptions,
-		ds: $author$project$Main$update,
-		du: A2($elm$core$Basics$composeR, $author$project$Main$view, $rtfeldman$elm_css$Html$Styled$toUnstyled)
+		c0: $author$project$Main$init,
+		dm: $author$project$Main$subscriptions,
+		dr: $author$project$Main$update,
+		dt: A2($elm$core$Basics$composeR, $author$project$Main$view, $rtfeldman$elm_css$Html$Styled$toUnstyled)
 	});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
