@@ -6,8 +6,31 @@ elm_test:
 elm_format:
   0.8.2
 
-script:
-  - echo "Validating"
-  - elm-format --validate
-  - echo "Running tests"
-  - elm-test
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo 'Validating'
+        - elm-format --validate
+        - echo 'Running tests'
+        - elm-test
+    - stage: deploy
+      script:
+        - npm install -g create-elm-app
+        - elm-app build
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN
+        keep_history: true
+        local_dir: build/
+        on:
+          branch: master
+
+stages:
+  - name: test
+    # require the type to be a PR
+    if: type = pull_request
+  - name: deploy
+    # require the type to be push to master
+    if: type = push AND branch = master
