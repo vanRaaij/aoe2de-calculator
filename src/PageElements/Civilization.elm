@@ -6,7 +6,7 @@ module PageElements.Civilization exposing
     , update
     )
 
-import Css exposing (display, fixed, fontSize, hidden, inlineBlock, left, overflowX, padding, pct, position, px, small, top, width, zero)
+import Css exposing (display, fixed, fontSize, hidden, inlineBlock, left, overflowX, padding, pct, position, px, small, textAlign, top, width, zero)
 import Data.CivilizationData exposing (Civilization)
 import Dict exposing (Dict)
 import Html.Styled exposing (Html, datalist, div, h1, input, option, text)
@@ -17,15 +17,18 @@ import PageElements.Unit exposing (UnitStateUpdateData, baseUnitUpdateData)
 
 type alias CivState =
     { selectedCiv : Maybe String
-    , civs : Dict String Civilization
     }
 
 
 init : CivState
 init =
     { selectedCiv = Nothing
-    , civs = toCivDict Data.CivilizationData.all
     }
+
+
+civs : Dict String Civilization
+civs =
+    toCivDict Data.CivilizationData.all
 
 
 toCivDict : List Civilization -> Dict String Civilization
@@ -40,7 +43,7 @@ type Msg
 
 
 show : CivState -> Html Msg
-show { selectedCiv, civs } =
+show { selectedCiv } =
     let
         s =
             case selectedCiv of
@@ -64,6 +67,7 @@ show { selectedCiv, civs } =
             , top zero
             , left zero
             , overflowX hidden
+            , textAlign left
             ]
         ]
         [ h1 [] [ text "Civilisation" ]
@@ -97,7 +101,7 @@ update msg civState =
         SelectCiv selectedCiv ->
             let
                 civ =
-                    Dict.get selectedCiv civState.civs
+                    Dict.get selectedCiv civs
 
                 newSelectedCiv =
                     if String.isEmpty selectedCiv then
