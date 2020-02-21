@@ -7,13 +7,7 @@ elm_format:
   0.8.2
 
 script:
-  - elm-app build
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  local_dir: build/
-  on:
-    branch: master
+  - echo "Validating"
+  - elm-format --validate
+  - echo "Running tests"
+  - elm-test
