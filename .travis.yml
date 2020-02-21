@@ -1,22 +1,19 @@
-language: node_js
-
-sudo: required
-
-node_js:
-  - '7'
-
-cache:
-  directories:
-    - $TRAVIS_BUILD_DIR/elm-stuff/build-artifacts
-    - $TRAVIS_BUILD_DIR/tests/elm-stuff/build-artifacts
-
-install:
-  - npm i elm-format create-elm-app gh-pages -g
+language: elm
+elm:
+  latest-0.19.1
+elm_test:
+  0.19.1
+elm_format:
+  0.8.2
 
 script:
-  - elm-format --validate src/
-  - cd src
-  - elm-app make src/Main.elm --output=/dev/null --yes --warn
-  - cd ..
-  - elm-app test
   - elm-app build
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: build/
+  on:
+    branch: master
