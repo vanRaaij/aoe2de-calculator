@@ -1,7 +1,10 @@
 module Data.UnitData exposing
-    ( UnitFamily
+    ( BaseUnitData
+    , UnitFamily
     , UnitFamilyType(..)
+    , baseUnits
     , militiaLine
+    , produces
     , spearmanLine
     )
 
@@ -22,9 +25,35 @@ type alias Unit =
     }
 
 
+type alias BaseUnitData =
+    { militia : Int
+    , spearman : Int
+    }
+
+
 type UnitFamilyType
     = Militia
     | Spearman
+
+
+take : Int -> UnitFamily -> UnitFamily
+take n { unitFamilyType, units, building } =
+    { unitFamilyType = unitFamilyType
+    , units = List.take n units
+    , building = building
+    }
+
+
+produces : Building -> UnitFamily -> Bool
+produces building unitFamily =
+    unitFamily.building == building
+
+
+baseUnits : BaseUnitData -> List UnitFamily
+baseUnits bud =
+    [ take bud.militia militiaLine
+    , take bud.spearman spearmanLine
+    ]
 
 
 militiaLine : UnitFamily
@@ -42,14 +71,6 @@ militiaLine =
         , Unit "Champion" militiaCost
         ]
     , building = Barracks
-    }
-
-
-take : Int -> UnitFamily -> UnitFamily
-take n { unitFamilyType, units, building } =
-    { unitFamilyType = unitFamilyType
-    , units = List.take n units
-    , building = building
     }
 
 

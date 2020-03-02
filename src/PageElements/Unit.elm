@@ -1,6 +1,5 @@
 module PageElements.Unit exposing
-    ( BaseUnitUpdateData
-    , UnitState
+    ( UnitState
     , UnitStateUpdateData
     , baseUnitUpdateData
     , init
@@ -8,7 +7,11 @@ module PageElements.Unit exposing
     )
 
 import Array exposing (Array)
-import Data.UnitData exposing (UnitFamilyType(..))
+import Data.BuildingData exposing (Building, buildingName)
+import Data.CivilizationData exposing (CivilizationData)
+import Data.UnitData exposing (BaseUnitData, UnitFamily, UnitFamilyType(..), baseUnits, produces)
+import Html.Styled exposing (Html, div, h3, text)
+import Html.Styled.Keyed as Keyed
 
 
 type alias UnitState =
@@ -21,17 +24,11 @@ type alias UnitState =
 
 type alias UnitStateUpdateData =
     { baseUnits :
-        BaseUnitUpdateData
+        BaseUnitData
     }
 
 
-type alias BaseUnitUpdateData =
-    { militia : Int
-    , spearman : Int
-    }
-
-
-getBaseUnitMax : BaseUnitUpdateData -> UnitFamilyType -> Int
+getBaseUnitMax : BaseUnitData -> UnitFamilyType -> Int
 getBaseUnitMax data unitFamilyType =
     case unitFamilyType of
         Militia ->
@@ -59,18 +56,53 @@ basicUnits =
     [ Militia, Spearman ]
 
 
-baseUnitUpdateData : BaseUnitUpdateData
+baseUnitUpdateData : BaseUnitData
 baseUnitUpdateData =
     { militia = 0
     , spearman = 0
     }
 
 
-update : Array UnitState -> UnitStateUpdateData -> Array UnitState
-update unitStates { baseUnits } =
+update : Array UnitState -> Maybe CivilizationData -> Array UnitState
+update unitStates civ =
     let
-        apply : UnitState -> UnitState
-        apply unitState =
-            { unitState | highestAllowed = getBaseUnitMax baseUnits unitState.unit }
+        apply : CivilizationData -> UnitState -> UnitState
+        apply civ_ unitState =
+            { unitState
+                | highestAllowed = getBaseUnitMax civ_.baseUnits unitState.unit
+                , selected = clamp 0 (getBaseUnitMax civ_.baseUnits unitState.unit) unitState.selected
+            }
     in
-    Array.map apply unitStates
+    case civ of
+        Just c ->
+            Array.map (apply c) unitStates
+
+        Nothing ->
+            unitStates
+
+
+view : Array UnitState -> List UnitFamily -> Building -> Html msg
+view unitStates unitFamilies building =
+    let
+        units : List UnitFamily
+        units =
+            List.filter (produces building) unitFamilies
+
+        pairs : List (UnitState, UnitFamily)
+        pairs =
+            units |>
+            List.map (\u -> (getFromArray unitStates u.unitFamilyType, u))
+
+        getFromArray : Array UnitState -> UnitFamilyType -> UnitState
+        getFromArray array unitFamilyType =
+            array.
+
+
+    in
+    Keyed.node (buildingName building) []
+        (List.map viewUnit)
+
+
+viewUnit : ( UnitState, UnitFamily ) -> ( String, Html msg )
+viewUnit ( unitState, unitFamily ) =
+    ( "Hello", div [] [] )

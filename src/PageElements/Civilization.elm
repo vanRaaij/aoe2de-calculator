@@ -1,62 +1,43 @@
 module PageElements.Civilization exposing
-    ( CivState
-    , Msg
+    ( Msg
+    , State
     , init
     , show
     , update
     )
 
 import Css exposing (display, fixed, fontSize, hidden, inlineBlock, left, overflowX, padding, pct, position, px, small, textAlign, top, width, zero)
-import Data.CivilizationData exposing (Civilization)
-import Dict exposing (Dict)
-import Html.Styled exposing (Html, datalist, div, h1, input, option, text)
+import Data.CivilizationData as CivilizationData exposing (Civilization, CivilizationData, civilizationData)
+import Html.Styled exposing (Html, datalist, div, h1, h2, h3, input, option, text)
 import Html.Styled.Attributes exposing (css, id, list, placeholder, size, type_, value)
 import Html.Styled.Events exposing (onInput)
-import PageElements.Unit exposing (UnitStateUpdateData, baseUnitUpdateData)
+import Maybe.Extra
 
 
-type alias CivState =
-    { selectedCiv : Maybe String
-    }
-
-
-init : CivState
-init =
-    { selectedCiv = Nothing
-    }
-
-
-civs : Dict String Civilization
-civs =
-    toCivDict Data.CivilizationData.all
-
-
-toCivDict : List Civilization -> Dict String Civilization
-toCivDict list =
-    list
-        |> List.map (\c -> ( c.name, c ))
-        |> Dict.fromList
+type alias State =
+    Maybe Civilization
 
 
 type Msg
     = SelectCiv String
 
 
-show : CivState -> Html Msg
-show { selectedCiv } =
+init : State
+init =
+    Nothing
+
+
+show : State -> Html Msg
+show selectedCiv =
     let
-        s =
-            case selectedCiv of
-                Nothing ->
-                    ""
+        civ : Maybe CivilizationData
+        civ =
+            Maybe.map civilizationData selectedCiv
 
-                Just a ->
-                    case Dict.get a civs of
-                        Just v ->
-                            v.description
-
-                        Nothing ->
-                            "Error"
+        description : String
+        description =
+            Maybe.withDefault "" <|
+                Maybe.map .description civ
     in
     div
         [ css
@@ -70,13 +51,23 @@ show { selectedCiv } =
             , textAlign left
             ]
         ]
-        [ h1 [] [ text "Civilisation" ]
-        , Dict.keys civs |> civSelector "Please select a civilisation"
-        , div
-            [ css
-                [ fontSize small ]
+    <|
+        Maybe.Extra.values
+            [ Just <|
+                div
+                    []
+                    [ h1 [] [ text "Civilisation" ]
+                    , civSelector "Please select a civilisation" <| List.map .name CivilizationData.all
+                    ]
+            , Maybe.map civilizationInformationBlock civ
             ]
-            [ text s ]
+
+
+civilizationInformationBlock : CivilizationData -> Html Msg
+civilizationInformationBlock civ =
+    div []
+        [ h3 [] [ text civ.name ]
+        , div [ css [ fontSize small ] ] [ text civ.description ]
         ]
 
 
@@ -95,37 +86,23 @@ toOption s =
     option [ value s ] [ text s ]
 
 
-update : Msg -> CivState -> ( CivState, UnitStateUpdateData, Cmd Msg )
-update msg civState =
+update : Msg -> State -> State
+update msg currentState =
     case msg of
-        SelectCiv selectedCiv ->
-            let
-                civ =
-                    Dict.get selectedCiv civs
+        SelectCiv name ->
+            if name == "" then
+                init
 
-                newSelectedCiv =
-                    if String.isEmpty selectedCiv then
-                        Nothing
+            else
+                let
+                    selectedCiv : Maybe Civilization
+                    selectedCiv =
+                        CivilizationData.civilizationDataBy .name name
+                            |> Maybe.map .civilization
+                in
+                case selectedCiv of
+                    Just c ->
+                        Just c
 
-                    else
-                        case civ of
-                            Just c ->
-                                Just c.name
-
-                            Nothing ->
-                                civState.selectedCiv
-
-                adjustmentData =
-                    case civ of
-                        Just c ->
-                            c.baseUnits
-
-                        Nothing ->
-                            baseUnitUpdateData
-            in
-            ( { civState
-                | selectedCiv = newSelectedCiv
-              }
-            , { baseUnits = adjustmentData }
-            , Cmd.none
-            )
+                    Nothing ->
+                        currentState
