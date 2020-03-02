@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/aoe2de-calculator/precache-manifest.d58d307f13c775e5048397f933b4e29e.js"
+  "/aoe2de-calculator/precache-manifest.394aa30d85acb98653d76189f348a6d3.js"
 );
 
 workbox.core.skipWaiting();
