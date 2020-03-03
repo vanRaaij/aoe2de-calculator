@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aoe2de-calculator/favicon.ico"
   },
   {
-    "revision": "8e3a012e218d98803732d872437a9998",
+    "revision": "08af56ecc94703289da80b8985d3c327",
     "url": "/aoe2de-calculator/index.html"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aoe2de-calculator/manifest.json"
   },
   {
-    "revision": "afa344525997f2e9e030",
+    "revision": "4b5636a935841f2f4491",
     "url": "/aoe2de-calculator/static/css/main.7f457dfb.chunk.css"
   },
   {
-    "revision": "afa344525997f2e9e030",
-    "url": "/aoe2de-calculator/static/js/main.afa34452.chunk.js"
+    "revision": "4b5636a935841f2f4491",
+    "url": "/aoe2de-calculator/static/js/main.4b5636a9.chunk.js"
   },
   {
     "revision": "53ee16382f90d8607d65",
