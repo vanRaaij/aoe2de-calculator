@@ -1,11 +1,13 @@
 module Data.UnitData exposing
     ( BaseUnitData
+    , BaseUnitDataContainer
     , UnitFamily
     , UnitFamilyType(..)
     , baseUnits
-    , militiaLine
+    , getFromUnit
+    , map
     , produces
-    , spearmanLine
+    , zip
     )
 
 import Data.BuildingData exposing (Building(..))
@@ -25,15 +27,62 @@ type alias Unit =
     }
 
 
-type alias BaseUnitData =
-    { militia : Int
-    , spearman : Int
-    }
-
-
 type UnitFamilyType
     = Militia
     | Spearman
+    | Archer
+
+
+type alias BaseUnitDataContainer a =
+    { militia : a
+    , spearman : a
+    , archer : a
+    }
+
+
+getFromUnit : UnitFamilyType -> BaseUnitDataContainer a -> a
+getFromUnit unitFamilyType =
+    case unitFamilyType of
+        Militia ->
+            .militia
+
+        Spearman ->
+            .spearman
+
+        Archer ->
+            .archer
+
+
+zip : (a -> b -> c) -> BaseUnitDataContainer a -> BaseUnitDataContainer b -> BaseUnitDataContainer c
+zip f buc1 buc2 =
+    { militia = f buc1.militia buc2.militia
+    , spearman = f buc1.spearman buc2.spearman
+    , archer = f buc1.archer buc2.archer
+    }
+
+
+map : (a -> b) -> BaseUnitDataContainer a -> BaseUnitDataContainer b
+map f buc =
+    { militia = f buc.militia
+    , spearman = f buc.spearman
+    , archer = f buc.archer
+    }
+
+
+type alias BaseUnitData =
+    BaseUnitDataContainer Int
+
+
+type alias BaseUnits =
+    BaseUnitDataContainer UnitFamily
+
+
+baseUnits : BaseUnitData -> BaseUnits
+baseUnits bud =
+    { militia = take bud.militia militiaLine
+    , spearman = take bud.spearman spearmanLine
+    , archer = take bud.archer archerLine
+    }
 
 
 take : Int -> UnitFamily -> UnitFamily
@@ -47,13 +96,6 @@ take n { unitFamilyType, units, building } =
 produces : Building -> UnitFamily -> Bool
 produces building unitFamily =
     unitFamily.building == building
-
-
-baseUnits : BaseUnitData -> List UnitFamily
-baseUnits bud =
-    [ take bud.militia militiaLine
-    , take bud.spearman spearmanLine
-    ]
 
 
 militiaLine : UnitFamily
@@ -87,4 +129,20 @@ spearmanLine =
         , Unit "Halbedier" spearmanCost
         ]
     , building = Barracks
+    }
+
+
+archerLine : UnitFamily
+archerLine =
+    let
+        archerCost =
+            withCostOf |> wood 25 |> food 45
+    in
+    { unitFamilyType = Archer
+    , units =
+        [ Unit "Archer" (archerCost |> time 35)
+        , Unit "Crossbowman" (archerCost |> time 27)
+        , Unit "Arbalester" (archerCost |> time 27)
+        ]
+    , building = ArcheryRange
     }

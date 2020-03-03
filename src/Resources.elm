@@ -28,50 +28,38 @@ type alias Cost =
     }
 
 
-withCostOf : Cost
+withCostOf : Resources
 withCostOf =
-    cost0
+    { food = 0
+    , wood = 0
+    , stone = 0
+    , gold = 0
+    }
 
 
-food : Int -> Cost -> Cost
-food f { resources, buildTime } =
-    let
-        newResources =
-            { resources | food = f }
-    in
-    Cost newResources buildTime
+food : Int -> Resources -> Resources
+food f resources =
+    { resources | food = f }
 
 
-wood : Int -> Cost -> Cost
-wood w { resources, buildTime } =
-    let
-        newResources =
-            { resources | wood = w }
-    in
-    Cost newResources buildTime
+wood : Int -> Resources -> Resources
+wood w resources =
+    { resources | wood = w }
 
 
-stone : Int -> Cost -> Cost
-stone s { resources, buildTime } =
-    let
-        newResources =
-            { resources | stone = s }
-    in
-    Cost newResources buildTime
+stone : Int -> Resources -> Resources
+stone s resources =
+    { resources | stone = s }
 
 
-gold : Int -> Cost -> Cost
-gold g { resources, buildTime } =
-    let
-        newResources =
-            { resources | gold = g }
-    in
-    Cost newResources buildTime
+gold : Int -> Resources -> Resources
+gold g resources =
+    { resources | gold = g }
 
 
-time : Float -> Cost -> Cost
-time t c =
-    { c | buildTime = t }
+time : Float -> Resources -> Cost
+time t r =
+    Cost r t
 
 
 applyToFood : (Int -> Int) -> Cost -> Cost
@@ -113,15 +101,3 @@ applyToGold f { resources, buildTime } =
 applyToTime : (Float -> Float) -> Cost -> Cost
 applyToTime f { resources, buildTime } =
     Cost resources <| f buildTime
-
-
-cost0 : Cost
-cost0 =
-    { resources =
-        { food = 0
-        , wood = 0
-        , stone = 0
-        , gold = 0
-        }
-    , buildTime = 0
-    }

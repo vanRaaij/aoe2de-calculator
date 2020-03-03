@@ -1,10 +1,10 @@
 module Main exposing (main)
 
 import Browser
-import Data.CivilizationData exposing (Civilization)
 import Html.Styled exposing (Html, div, toUnstyled)
 import Html.Styled.Lazy exposing (lazy)
 import PageElements.Civilization as Civilization
+import PageElements.Unit as Unit exposing (Msg(..))
 
 
 main =
@@ -22,6 +22,7 @@ main =
 
 type alias Model =
     { civilizationState : Civilization.State
+    , unitState : Unit.State
     }
 
 
@@ -31,7 +32,9 @@ type alias Model =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { civilizationState = Civilization.init }
+    ( { civilizationState = Civilization.init
+      , unitState = Unit.init
+      }
     , Cmd.none
     )
 
@@ -48,8 +51,18 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateCiv civMsg ->
+            let
+                newCivilizationState : Civilization.State
+                newCivilizationState =
+                    Civilization.update civMsg model.civilizationState
+
+                newUnitState : Unit.State
+                newUnitState =
+                    Unit.update (NewCiv newCivilizationState) model.unitState
+            in
             ( { model
-                | civilizationState = Civilization.update civMsg model.civilizationState
+                | civilizationState = newCivilizationState
+                , unitState = newUnitState
               }
             , Cmd.none
             )

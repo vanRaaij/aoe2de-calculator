@@ -4,6 +4,7 @@ module Data.CivilizationData exposing
     , all
     , civilizationData
     , civilizationDataBy
+    , civilizationDatasBy
     )
 
 import Data.TechnologyData exposing (Technology, supplies)
@@ -52,9 +53,14 @@ civilizationData civilization =
 
 civilizationDataBy : (CivilizationData -> a) -> a -> Maybe CivilizationData
 civilizationDataBy f a =
+    civilizationDatasBy f a
+        |> List.head
+
+
+civilizationDatasBy : (CivilizationData -> a) -> a -> List CivilizationData
+civilizationDatasBy f a =
     all
         |> List.filter (\c -> f c == a)
-        |> List.head
 
 
 all : List CivilizationData
@@ -76,6 +82,7 @@ britons =
     , baseUnits =
         { militia = 5
         , spearman = 3
+        , archer = 3
         }
     , technologies = [ supplies ]
     }
@@ -89,6 +96,7 @@ byzantines =
     , baseUnits =
         { militia = 5
         , spearman = 3
+        , archer = 3
         }
     , technologies = [ supplies ]
     }
@@ -102,6 +110,7 @@ chinese =
     , baseUnits =
         { militia = 5
         , spearman = 3
+        , archer = 3
         }
     , technologies = [ supplies ]
     }
@@ -115,6 +124,7 @@ franks =
     , baseUnits =
         { militia = 5
         , spearman = 3
+        , archer = 2
         }
     , technologies = [ supplies ]
     }
@@ -128,6 +138,7 @@ persians =
     , baseUnits =
         { militia = 3
         , spearman = 3
+        , archer = 2
         }
     , technologies = [ supplies ]
     }
@@ -141,6 +152,7 @@ saracens =
     , baseUnits =
         { militia = 5
         , spearman = 2
+        , archer = 3
         }
     , technologies = [ supplies ]
     }
