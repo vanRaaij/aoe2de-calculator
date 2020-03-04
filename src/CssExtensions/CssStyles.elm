@@ -1,4 +1,4 @@
-module Css.CssStyles exposing (..)
+module CssExtensions.CssStyles exposing (..)
 
 import Css exposing (..)
 
