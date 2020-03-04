@@ -7,6 +7,7 @@ module PageElements.Civilization exposing
     )
 
 import Css exposing (display, fixed, fontSize, hidden, inlineBlock, left, overflowX, padding, pct, position, px, small, textAlign, top, width, zero)
+import Css.CssStyles as CssStyles
 import Data.CivilizationData as CivilizationData exposing (Civilization, CivilizationData, civilizationData)
 import Html.Styled exposing (Html, datalist, div, h1, h2, h3, input, option, text)
 import Html.Styled.Attributes exposing (css, id, list, placeholder, size, type_, value)
@@ -40,17 +41,7 @@ show selectedCiv =
                 Maybe.map .description civ
     in
     div
-        [ css
-            [ display inlineBlock
-            , position fixed
-            , width (pct 20)
-            , padding (px 10)
-            , top zero
-            , left zero
-            , overflowX hidden
-            , textAlign left
-            ]
-        ]
+        [ css [ CssStyles.sidebar ] ]
     <|
         Maybe.Extra.values
             [ Just <|

@@ -1,7 +1,10 @@
 module Main exposing (main)
 
 import Browser
-import Html.Styled exposing (Html, div, toUnstyled)
+import Css exposing (block, display, maxWidth, pct, property)
+import Css.CssStyles exposing (gridContainer)
+import Html.Styled exposing (Html, div, text, toUnstyled)
+import Html.Styled.Attributes exposing (css)
 import Html.Styled.Lazy exposing (lazy)
 import PageElements.Civilization as Civilization
 import PageElements.Unit as Unit exposing (Msg(..))
@@ -84,7 +87,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div
-        []
+        [ css [ gridContainer ] ]
         [ lazy Civilization.show model.civilizationState
             |> Html.Styled.map UpdateCiv
         ]
