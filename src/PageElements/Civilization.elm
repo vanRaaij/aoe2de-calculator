@@ -6,8 +6,8 @@ module PageElements.Civilization exposing
     , update
     )
 
-import Css exposing (display, fixed, fontSize, hidden, inlineBlock, left, overflowX, padding, pct, position, px, small, textAlign, top, width, zero)
-import Css.CssStyles as CssStyles
+import Css exposing (fontSize, small)
+import CssExtensions.CssStyles as CssStyles
 import Data.CivilizationData as CivilizationData exposing (Civilization, CivilizationData, civilizationData)
 import Html.Styled exposing (Html, datalist, div, h1, h2, h3, input, option, text)
 import Html.Styled.Attributes exposing (css, id, list, placeholder, size, type_, value)

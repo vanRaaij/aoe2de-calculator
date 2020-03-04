@@ -1,9 +1,8 @@
 module Main exposing (main)
 
 import Browser
-import Css exposing (block, display, maxWidth, pct, property)
-import Css.CssStyles exposing (gridContainer)
-import Html.Styled exposing (Html, div, text, toUnstyled)
+import CssExtensions.CssStyles exposing (gridContainer)
+import Html.Styled exposing (Html, div, toUnstyled)
 import Html.Styled.Attributes exposing (css)
 import Html.Styled.Lazy exposing (lazy)
 import PageElements.Civilization as Civilization
