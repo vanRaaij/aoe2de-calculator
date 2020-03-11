@@ -6,18 +6,16 @@ module Data.UnitData exposing
     , baseUnits
     , getFromUnit
     , map
-    , produces
+    , unitData
     , zip
     )
 
-import Data.BuildingData exposing (Building(..))
 import Resources exposing (Cost, food, gold, time, withCostOf, wood)
 
 
 type alias UnitFamily =
     { unitFamilyType : UnitFamilyType
     , units : List Unit
-    , building : Building
     }
 
 
@@ -31,12 +29,30 @@ type UnitFamilyType
     = Militia
     | Spearman
     | Archer
+    | Skirmisher
+
+
+unitData : UnitFamilyType -> UnitFamily
+unitData unitFamilyType =
+    case unitFamilyType of
+        Militia ->
+            militiaLine
+
+        Spearman ->
+            spearmanLine
+
+        Archer ->
+            archerLine
+
+        Skirmisher ->
+            skirmisherLine
 
 
 type alias BaseUnitDataContainer a =
     { militia : a
     , spearman : a
     , archer : a
+    , skirmisher : a
     }
 
 
@@ -52,12 +68,16 @@ getFromUnit unitFamilyType =
         Archer ->
             .archer
 
+        Skirmisher ->
+            .skirmisher
+
 
 zip : (a -> b -> c) -> BaseUnitDataContainer a -> BaseUnitDataContainer b -> BaseUnitDataContainer c
 zip f buc1 buc2 =
     { militia = f buc1.militia buc2.militia
     , spearman = f buc1.spearman buc2.spearman
     , archer = f buc1.archer buc2.archer
+    , skirmisher = f buc1.skirmisher buc2.skirmisher
     }
 
 
@@ -66,6 +86,7 @@ map f buc =
     { militia = f buc.militia
     , spearman = f buc.spearman
     , archer = f buc.archer
+    , skirmisher = f buc.skirmisher
     }
 
 
@@ -82,20 +103,15 @@ baseUnits bud =
     { militia = take bud.militia militiaLine
     , spearman = take bud.spearman spearmanLine
     , archer = take bud.archer archerLine
+    , skirmisher = take bud.skirmisher skirmisherLine
     }
 
 
 take : Int -> UnitFamily -> UnitFamily
-take n { unitFamilyType, units, building } =
+take n { unitFamilyType, units } =
     { unitFamilyType = unitFamilyType
     , units = List.take n units
-    , building = building
     }
-
-
-produces : Building -> UnitFamily -> Bool
-produces building unitFamily =
-    unitFamily.building == building
 
 
 militiaLine : UnitFamily
@@ -112,7 +128,6 @@ militiaLine =
         , Unit "Two-handed Swordsman" militiaCost
         , Unit "Champion" militiaCost
         ]
-    , building = Barracks
     }
 
 
@@ -128,7 +143,6 @@ spearmanLine =
         , Unit "Pikeman" spearmanCost
         , Unit "Halbedier" spearmanCost
         ]
-    , building = Barracks
     }
 
 
@@ -144,5 +158,19 @@ archerLine =
         , Unit "Crossbowman" (archerCost |> time 27)
         , Unit "Arbalester" (archerCost |> time 27)
         ]
-    , building = ArcheryRange
+    }
+
+
+skirmisherLine : UnitFamily
+skirmisherLine =
+    let
+        skirmisherCost =
+            withCostOf |> food 25 |> wood 35 |> time 22
+    in
+    { unitFamilyType = Skirmisher
+    , units =
+        [ Unit "Skirmisher" skirmisherCost
+        , Unit "Elite Skirmisher" skirmisherCost
+        , Unit "Imperial Skirmisher" skirmisherCost
+        ]
     }

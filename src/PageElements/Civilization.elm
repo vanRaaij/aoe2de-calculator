@@ -6,10 +6,9 @@ module PageElements.Civilization exposing
     , update
     )
 
-import Css exposing (fontSize, small)
-import CssExtensions.CssStyles as CssStyles
+import CssExtensions.CssStyles as CssStyles exposing (smallText)
 import Data.CivilizationData as CivilizationData exposing (Civilization, CivilizationData, civilizationData)
-import Html.Styled exposing (Html, datalist, div, h1, h2, h3, input, option, text)
+import Html.Styled exposing (Html, datalist, div, h1, h3, input, option, text)
 import Html.Styled.Attributes exposing (css, id, list, placeholder, size, type_, value)
 import Html.Styled.Events exposing (onInput)
 import Maybe.Extra
@@ -34,11 +33,6 @@ show selectedCiv =
         civ : Maybe CivilizationData
         civ =
             Maybe.map civilizationData selectedCiv
-
-        description : String
-        description =
-            Maybe.withDefault "" <|
-                Maybe.map .description civ
     in
     div
         [ css [ CssStyles.sidebar ] ]
@@ -58,7 +52,7 @@ civilizationInformationBlock : CivilizationData -> Html Msg
 civilizationInformationBlock civ =
     div []
         [ h3 [] [ text civ.name ]
-        , div [ css [ fontSize small ] ] [ text civ.description ]
+        , div [ css [ smallText ] ] [ text civ.description ]
         ]
 
 

@@ -2,15 +2,21 @@ module PageElements.Unit exposing
     ( Msg(..)
     , State
     , init
+    , show
     , update
     )
 
+import CssExtensions.CssStyles exposing (mainContent)
+import Data.BuildingData as BuildingData exposing (Building(..))
 import Data.CivilizationData exposing (Civilization, CivilizationData, civilizationData)
-import Data.UnitData as UnitData exposing (BaseUnitData, BaseUnitDataContainer, UnitFamily, UnitFamilyType(..))
+import Data.UnitData as UnitData exposing (BaseUnitData, BaseUnitDataContainer, UnitFamily, UnitFamilyType(..), unitData)
+import Html.Styled exposing (Html, div, text)
+import Html.Styled.Attributes exposing (css)
+import Maybe.Extra exposing (values)
 
 
 type alias State =
-    { baseUnits : UnitStates }
+    UnitStates
 
 
 type alias UnitStates =
@@ -35,11 +41,10 @@ init =
         unitStateInit =
             { count = 0, selected = 0, highestAllowed = 0 }
     in
-    { baseUnits =
-        { militia = unitStateInit
-        , spearman = unitStateInit
-        , archer = unitStateInit
-        }
+    { militia = unitStateInit
+    , spearman = unitStateInit
+    , archer = unitStateInit
+    , skirmisher = unitStateInit
     }
 
 
@@ -61,7 +66,7 @@ update msg state =
                             , highestAllowed = int
                             }
                     in
-                    { baseUnits = UnitData.zip setHighestTo state.baseUnits civ.baseUnits }
+                    UnitData.zip setHighestTo state civ.baseUnits
 
                 Nothing ->
                     let
@@ -72,4 +77,37 @@ update msg state =
                             , highestAllowed = 0
                             }
                     in
-                    { baseUnits = UnitData.map reset state.baseUnits }
+                    UnitData.map reset state
+
+
+show : State -> Html msg
+show state =
+    div [ css [ mainContent ] ] <| List.map (showBuilding state) [ Barracks, ArcheryRange ]
+
+
+showBuilding : State -> Building -> Html msg
+showBuilding state building =
+    let
+        units : List ( UnitFamily, UnitState )
+        units =
+            List.map
+                (\family -> ( unitData family, UnitData.getFromUnit family state ))
+                (BuildingData.production building)
+    in
+    div [] <| values <| List.map showUnit units
+
+
+showUnit : ( UnitFamily, UnitState ) -> Maybe (Html msg)
+showUnit ( unitFamilyType, { highestAllowed, selected } as unitState ) =
+    let
+        getUnit : Int -> UnitFamily -> Maybe String
+        getUnit int unitState_ =
+            Maybe.map .name (List.head unitState_.units)
+    in
+    if highestAllowed < selected || highestAllowed == 0 then
+        Nothing
+
+    else
+        unitFamilyType
+            |> getUnit selected
+            |> Maybe.map text

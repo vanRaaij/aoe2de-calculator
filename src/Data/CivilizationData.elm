@@ -7,7 +7,7 @@ module Data.CivilizationData exposing
     , civilizationDatasBy
     )
 
-import Data.TechnologyData exposing (Technology, supplies)
+import Data.TechnologyData exposing (TechnologyType(..))
 import Data.UnitData exposing (BaseUnitData)
 
 
@@ -25,7 +25,7 @@ type alias CivilizationData =
     , name : String
     , description : String
     , baseUnits : BaseUnitData
-    , technologies : List Technology
+    , technologies : List TechnologyType
     }
 
 
@@ -83,8 +83,12 @@ britons =
         { militia = 5
         , spearman = 3
         , archer = 3
+        , skirmisher = 2
         }
-    , technologies = [ supplies ]
+    , technologies =
+        [ Supplies
+        , Conscription
+        ]
     }
 
 
@@ -97,8 +101,12 @@ byzantines =
         { militia = 5
         , spearman = 3
         , archer = 3
+        , skirmisher = 2
         }
-    , technologies = [ supplies ]
+    , technologies =
+        [ Supplies
+        , Conscription
+        ]
     }
 
 
@@ -111,8 +119,12 @@ chinese =
         { militia = 5
         , spearman = 3
         , archer = 3
+        , skirmisher = 2
         }
-    , technologies = [ supplies ]
+    , technologies =
+        [ Supplies
+        , Conscription
+        ]
     }
 
 
@@ -125,8 +137,12 @@ franks =
         { militia = 5
         , spearman = 3
         , archer = 2
+        , skirmisher = 2
         }
-    , technologies = [ supplies ]
+    , technologies =
+        [ Supplies
+        , Conscription
+        ]
     }
 
 
@@ -139,8 +155,12 @@ persians =
         { militia = 3
         , spearman = 3
         , archer = 2
+        , skirmisher = 2
         }
-    , technologies = [ supplies ]
+    , technologies =
+        [ Supplies
+        , Conscription
+        ]
     }
 
 
@@ -153,6 +173,10 @@ saracens =
         { militia = 5
         , spearman = 2
         , archer = 3
+        , skirmisher = 2
         }
-    , technologies = [ supplies ]
+    , technologies =
+        [ Supplies
+        , Conscription
+        ]
     }

@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Browser
-import CssExtensions.CssStyles exposing (gridContainer)
+import CssExtensions.CssStyles exposing (global)
 import Html.Styled exposing (Html, div, toUnstyled)
 import Html.Styled.Attributes exposing (css)
 import Html.Styled.Lazy exposing (lazy)
@@ -75,7 +75,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     Sub.batch []
 
 
@@ -86,7 +86,8 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div
-        [ css [ gridContainer ] ]
+        [ css [ global ] ]
         [ lazy Civilization.show model.civilizationState
             |> Html.Styled.map UpdateCiv
+        , lazy Unit.show model.unitState
         ]
