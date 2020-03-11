@@ -1,7 +1,7 @@
 {
   "main.css": "/aoe2de-calculator/static/css/main.7f457dfb.chunk.css",
-  "main.js": "/aoe2de-calculator/static/js/main.00c9506f.chunk.js",
-  "main.js.map": "/aoe2de-calculator/static/js/main.00c9506f.chunk.js.map",
+  "main.js": "/aoe2de-calculator/static/js/main.d72dc323.chunk.js",
+  "main.js.map": "/aoe2de-calculator/static/js/main.d72dc323.chunk.js.map",
   "runtime~main.js": "/aoe2de-calculator/static/js/runtime~main.53ee1638.js",
   "runtime~main.js.map": "/aoe2de-calculator/static/js/runtime~main.53ee1638.js.map",
   "vendors~main.js": "/aoe2de-calculator/static/js/vendors~main.604c6712.chunk.js",
@@ -11,5 +11,5 @@
   "index.html": "/aoe2de-calculator/index.html",
   "logo.svg": "/aoe2de-calculator/logo.svg",
   "manifest.json": "/aoe2de-calculator/manifest.json",
-  "precache-manifest.86f568fc28c33830218d06729bef6537.js": "/aoe2de-calculator/precache-manifest.86f568fc28c33830218d06729bef6537.js"
+  "precache-manifest.714583d88ef81d8723dae2f0d8198d87.js": "/aoe2de-calculator/precache-manifest.714583d88ef81d8723dae2f0d8198d87.js"
 }
